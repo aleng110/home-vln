@@ -1,0 +1,365 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="wpb_home_gazebo">
+  <link name="base_footprint">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.05 0.001" />
+      </geometry>
+    </visual>
+  </link>
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.01 0.01 0.001" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+    </visual>
+  </link>
+  <joint name="base_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <parent link="base_footprint" />
+    <child link="base_link" />
+  </joint>
+  <link name="body_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://wpr_simulation2/meshes/wpb_home/wpb_home_std.dae" scale="1 1 1" />
+      </geometry>
+      <origin rpy="1.57 0 1.57" xyz="-.225 -0.225 0" />
+    </visual>
+    <collision>
+      <origin xyz="0.001 0 .065" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="0.13" radius="0.226" />
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="20" />
+      <inertia ixx="4.00538" ixy="0.0" ixz="0.0" iyy="4.00538" iyz="0.0" izz="0.51076" />
+    </inertial>
+  </link>
+  <gazebo reference="body_link">
+    <mu1>0.0</mu1>
+    <mu2>0.0</mu2>
+  </gazebo>
+  <joint name="base_to_body" type="fixed">
+    <parent link="base_link" />
+    <child link="body_link" />
+    <origin rpy="0 0 0" xyz="0 0 0" />
+  </joint>
+  <link name="base_top_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.33 0.31 0.01" />
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.01" />
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01" />
+    </inertial>
+  </link>
+  <joint name="body_to_top" type="fixed">
+    <parent link="body_link" />
+    <child link="base_top_link" />
+    <origin rpy="0 0 0" xyz="0.01 0 0.2" />
+  </joint>
+  <link name="body_back_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.03 0.23 1.05" />
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.01" />
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01" />
+    </inertial>
+  </link>
+  <joint name="body_to_back" type="fixed">
+    <parent link="base_top_link" />
+    <child link="body_back_link" />
+    <origin rpy="0 0.31 0" xyz="-0.038 0 0.5" />
+  </joint>
+  <link name="head_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.07 0.28  0.06" />
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.01" />
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01" />
+    </inertial>
+  </link>
+  <joint name="body_to_head" type="fixed">
+    <parent link="base_top_link" />
+    <child link="head_link" />
+    <origin rpy="0 0.27 0" xyz="0.155 0 1.17" />
+  </joint>
+  <link name="front_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder length="1.1" radius="0.01" />
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.01" />
+      <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.01" />
+    </inertial>
+  </link>
+  <joint name="body_to_front" type="fixed">
+    <parent link="base_top_link" />
+    <child link="front_link" />
+    <origin rpy="0 0 0" xyz="0.15 0 0.55" />
+  </joint>
+  <link name="laser_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.001" radius="0.001" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+    </visual>
+  </link>
+  <joint name="laser_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0.15" />
+    <parent link="base_link" />
+    <child link="laser_link" />
+  </joint>
+  <gazebo reference="laser_link">
+    <sensor type="ray" name="laser_link">
+      <pose>0 0 0.06 0 0 0</pose>
+      <visualize>false</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>1080</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159265</min_angle>
+            <max_angle>3.14159265</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.24</min>
+          <max>10.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="gazebo_ros_laser_link_controller" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <namespace>/</namespace>
+          <remapping>~/out:=scan_raw</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>laser_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+  <link name="kinect2_dock">
+    <visual>
+      <geometry>
+        <box size="0.001 0.001 0.001" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+    </visual>
+  </link>
+  <joint name="kinect_height" type="fixed">
+    <parent link="base_link" />
+    <child link="kinect2_dock" />
+    <origin xyz="0.145 -0.013 1.37" rpy="0 0 0" />
+  </joint>
+  <link name="kinect2_head_frame">
+    <visual>
+      <geometry>
+        <box size="0.001 0.001 0.001" />
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </visual>
+  </link>
+  <joint name="kinect_pitch" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0.5 0" />
+    <parent link="kinect2_dock" />
+    <child link="kinect2_head_frame" />
+  </joint>
+  <link name="kinect2_front_frame">
+    <visual>
+      <geometry>
+        <box size="0.001 0.001 0.001" />
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </visual>
+  </link>
+  <joint name="kinect_head" type="fixed">
+    <origin xyz="0 0 0" rpy=" 0 1.57 0" />
+    <parent link="kinect2_head_frame" />
+    <child link="kinect2_front_frame" />
+  </joint>
+  <link name="kinect2_ir_optical_frame">
+    <visual>
+      <geometry>
+        <box size="0.001 0.001 0.001" />
+      </geometry>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+    </visual>
+  </link>
+  <joint name="kinect_ir_trans" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 -1.57" />
+    <parent link="kinect2_front_frame" />
+    <child link="kinect2_ir_optical_frame" />
+  </joint>
+  <link name="kinect2_camera_frame">
+    <visual>
+      <geometry>
+        <box size="0.001 0.001 0.001" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+    </visual>
+  </link>
+  <joint name="kinect_camra_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="3.1415926 0 -1.5707963" />
+    <parent link="kinect2_ir_optical_frame" />
+    <child link="kinect2_camera_frame" />
+  </joint>
+  <link name="kinect2_rgb_optical_frame">
+    <visual>
+      <geometry>
+        <box size="0.001 0.001 0.001" />
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+    </visual>
+  </link>
+  <joint name="kinect_hd_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 1.5707963 0" />
+    <parent link="kinect2_camera_frame" />
+    <child link="kinect2_rgb_optical_frame" />
+  </joint>
+  <gazebo reference="kinect2_head_frame">
+    <sensor type="depth" name="kinect2_depth_sensor">
+      <always_on>true</always_on>
+      <update_rate>10.0</update_rate>
+      <camera name="kinect2_depth_sensor">
+        <horizontal_fov>1.570796327</horizontal_fov>
+        <image>
+          <width>512</width>
+          <height>424</height>
+          <format>B8G8R8</format>
+        </image>
+        <clip>
+          <near>0.5</near>
+          <far>6.0</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.1</mean>
+          <stddev>0.07</stddev>
+        </noise>
+      </camera>
+      <plugin name="kinect2_depth_control" filename="libgazebo_ros_camera.so">
+        <ros>
+          <namespace>/camera</namespace>
+          <remapping>wpb_rgbd/image_raw:=image_raw</remapping>
+          <remapping>wpb_rgbd/camera_info:=camera_info</remapping>
+          <remapping>wpb_rgbd/depth/image_raw:=depth/image_raw</remapping>
+          <remapping>wpb_rgbd/depth/camera_info:=depth/camera_info</remapping>
+          <remapping>wpb_rgbd/points:=points</remapping>
+        </ros>
+        <camera_name>wpb_rgbd</camera_name>
+        <frame_name>vln_camera_optical</frame_name>
+        <!-- 与 Gazebo 原生深度点云的零起始像素中心对齐。 -->
+        <cx>255.5</cx>
+        <cy>211.5</cy>
+        <hack_baseline>0.1</hack_baseline>
+        <min_depth>0.001</min_depth>
+        <max_depth>300.0</max_depth>
+      </plugin>
+    </sensor>
+  </gazebo>
+  <gazebo>
+    <plugin name="base_controller" filename="libgazebo_ros_planar_move.so">
+      <ros>
+        <remapping>cmd_vel:=cmd_vel</remapping>
+        <remapping>odom:=odom</remapping>
+      </ros>
+      <update_rate>100</update_rate>
+      <publish_rate>20</publish_rate>
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_footprint</robot_base_frame>
+      <covariance_x>0.0001</covariance_x>
+      <covariance_y>0.0001</covariance_y>
+      <covariance_yaw>0.01</covariance_yaw>
+    </plugin>
+  </gazebo>
+  <gazebo reference="body_link">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <imu>
+        <angular_velocity>
+          <x>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>2e-4</stddev>
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>2e-4</stddev>
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>2e-4</stddev>
+            </noise>
+          </z>
+        </angular_velocity>
+        <linear_acceleration>
+          <x>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>1.7e-2</stddev>
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>1.7e-2</stddev>
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>1.7e-2</stddev>
+            </noise>
+          </z>
+        </linear_acceleration>
+      </imu>
+      <plugin name="wpb_imu" filename="libgazebo_ros_imu_sensor.so">
+        <ros>
+          <namespace>/</namespace>
+          <remapping>~/out:=imu/data</remapping>
+        </ros>
+        <frame_name>body_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+  <link name="vln_camera_optical" />
+  <joint name="vln_camera_optical_joint" type="fixed">
+    <parent link="kinect2_head_frame" />
+    <child link="vln_camera_optical" />
+    <origin xyz="0 0 0" rpy="-1.5707963267948966 0 -1.5707963267948966" />
+  </joint>
+</robot>

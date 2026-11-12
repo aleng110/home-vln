@@ -1,0 +1,19 @@
+text_prompts:
+- sofa
+- coffee table
+- dining table
+- chair
+canonical_labels:
+- sofa
+- tea_table
+- dining_table
+- chair
+models:
+  open_vocabulary: yoloe-26m-seg.pt
+minimum_confidence:
+  sofa: 0.35
+  tea_table: 0.4
+  dining_table: 0.45
+  chair: 0.5
+image_size: 640
+device: '0'

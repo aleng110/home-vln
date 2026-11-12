@@ -1,0 +1,16 @@
+home_explore_agent:
+  ros__parameters:
+    near_distance: 1.25
+    docking_standoff: 0.9
+    furniture_clearance: 0.32
+    entry_forward_distance: 1.5
+    entry_min_progress: 1.1
+    search_looks_per_location: 2
+    search_cloud_checks: 2
+    view_accept_angle: 0.3490658504
+    view_limit_angle: 0.436332313
+    perception_interval: 0.5
+    semantic_voxel_size: 0.1
+    semantic_confirm_hits: 2
+    inspection_timeout: 120.0
+    semantic_min_stable_voxels: 20

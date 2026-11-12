@@ -1,0 +1,42 @@
+# 凭据与本机配置
+.env
+.env.*
+!.env.example
+config/local.env
+*.pem
+*.key
+
+# 构建产物与运行数据
+/build/
+/install/
+/log/
+/results/
+/work/
+/deliverables/
+
+# 模型权重（来源见 config/model_assets.json）
+*.pt
+*.pth
+*.onnx
+*.engine
+*.ckpt
+*.safetensors
+mobileclip*.ts
+
+# Python 与编辑器缓存
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+.conda/
+.DS_Store
+
+# 导出包与录制数据
+*.zip
+*.tar.gz
+*.db3
+*.mcap
+*.bag

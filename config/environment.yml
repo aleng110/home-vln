@@ -1,0 +1,21 @@
+# 锁定已验证的核心版本，其余间接依赖由 pip 解析。
+# ROS 使用系统 Python；创建此环境需要联网。
+name: yolo
+channels:
+  - defaults
+dependencies:
+  - python=3.10.22
+  - pip=26.2.1
+  - pip:
+      - --extra-index-url https://download.pytorch.org/whl/cu124
+      - torch==2.6.0+cu124
+      - torchvision==0.21.0+cu124
+      - ultralytics==8.4.202
+      - numpy==1.26.4
+      - opencv-python==4.10.0.84
+      - PyYAML==6.0.3
+      - scipy==1.13.1
+      - pillow==12.3.0
+      - ftfy==6.3.1
+      - regex==2026.9.29
+      - clip @ git+https://github.com/ultralytics/CLIP.git@7ffa84b3bfa40c42ecc1c77147a855e69cb2dd40
